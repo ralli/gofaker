@@ -1,10 +1,11 @@
-package faker
+package gofaker
 
 import (
 	"fmt"
 	"sort"
 	"strings"
 
+	"github.com/ralli/gofaker/data"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -18,6 +19,9 @@ type localeData struct {
 	data   interface{}
 }
 
+// AllData holds Data onjects for multiple locales.
+// The Get operation will try all these locale
+// data objects until a match is found.
 type AllData struct {
 	locales []*localeData
 }
@@ -33,7 +37,7 @@ func keys(key string) []string {
 // loadAllLocales loads a list of all available locales
 // as a sorted list of strings
 func loadAllLocales() []string {
-	data, err := AssetDir("data")
+	data, err := data.AssetDir("data")
 	if err != nil {
 		panic(err)
 	}
@@ -104,7 +108,7 @@ func (d *localeData) Get(key string) []string {
 
 // loadLocaleData loads the fake data definition for a given locale.
 func loadLocaleData(locale string) (interface{}, error) {
-	bla, err := Asset("data/" + locale + ".yml")
+	bla, err := data.Asset("data/" + locale + ".yml")
 	if err != nil {
 		return nil, err
 	}
@@ -136,6 +140,9 @@ func NewData(locale string) (Data, error) {
 	return &AllData{data}, nil
 }
 
+// Get returns a fake data definition for a given key.
+// A fake data definition is a list from which a random value may be
+// chosen.
 func (d *AllData) Get(key string) []string {
 	for _, locale := range d.locales {
 		a := locale.Get(key)

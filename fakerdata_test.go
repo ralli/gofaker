@@ -1,4 +1,4 @@
-package faker
+package gofaker
 
 import (
 	"fmt"
@@ -22,11 +22,10 @@ var existingInputs = []struct {
 	{"en.faker.separator", "[ & ]"},
 }
 
-func ExampleKeys() {
+func TestKeys(t *testing.T) {
 	in := "a.b.cc"
 	out := keys(in)
-	fmt.Println(out)
-	// Output: [a b cc]
+	assert.Equal(t, "[a b cc]", fmt.Sprint(out))
 }
 
 func TestLocaleDataGet(t *testing.T) {
@@ -51,11 +50,6 @@ func TestLocaleGetNil(t *testing.T) {
 		a := localeData.Get(k)
 		assert.Empty(t, a)
 	}
-}
-
-func ExampleAllLocales() {
-	fmt.Println(allLocales)
-	// Output: [ca ca-CAT da-DK de de-AT de-CH en en-AU en-BORK en-CA en-GB en-IND en-NEP en-NG en-NZ en-PAK en-SG en-UG en-US en-ZA en-au-ocker es es-MX fa fi-FI fr he it ja ko nb-NO nl pl pt pt-BR ru sk sv uk vi zh-CN zh-TW]
 }
 
 func TestLocaleNames(t *testing.T) {
@@ -83,4 +77,9 @@ func TestFakerDataGet(t *testing.T) {
 	a = d.Get("separator")
 	assert.NotEmpty(t, a)
 	assert.Equal(t, "[ & ]", fmt.Sprint(a))
+}
+
+func TestNewDataError(t *testing.T) {
+	_, err := NewData("giugu")
+	assert.Error(t, err)
 }
