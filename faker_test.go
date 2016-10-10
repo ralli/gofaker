@@ -49,6 +49,14 @@ func TestFaker(t *testing.T) {
 		re := regexp.MustCompile(`^[a-zA-Z]{3}\d{3}[a-zA-Z]b&$`)
 		assert.Regexp(t, re, out)
 	})
+
+	t.Run("MustFetchPanics", func(t *testing.T) {
+		assert.Panics(t, func() { f.MustFetch("dummy") })
+	})
+
+	t.Run("FetchOrEmptyReturnsEmpty", func(t *testing.T) {
+		assert.Empty(t, f.FetchOrEmpty("dummy"))
+	})
 }
 
 func TestExtractSubKeys(t *testing.T) {

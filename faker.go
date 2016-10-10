@@ -15,6 +15,7 @@ type Faker struct {
 	data    Data
 	Name    *Name
 	Address *Address
+	Phone   *Phone
 }
 
 var digits = []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
@@ -124,6 +125,26 @@ func (faker *Faker) Fetch(key string) (string, error) {
 	return faker.randomValue(v), nil
 }
 
+// MustFetch gets a fake data value without further expansion. That means, the result may
+// contain unexpanded variables like '#{last_name}'. Panics on error.
+func (faker *Faker) MustFetch(key string) string {
+	v, err := faker.Fetch(key)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
+// FetchOrEmpty gets a fake data value without further expansion. That means, the result may
+// contain unexpanded variables like '#{last_name}'. Returns an empty string on error.
+func (faker *Faker) FetchOrEmpty(key string) string {
+	v, err := faker.Fetch(key)
+	if err != nil {
+		return ""
+	}
+	return v
+}
+
 // NewFaker creates a new Faker instance for a given locale
 func NewFaker(locale string) (*Faker, error) {
 	data, err := NewData(locale)
@@ -134,6 +155,7 @@ func NewFaker(locale string) (*Faker, error) {
 	faker := &Faker{random: random, data: data}
 	faker.Name = &Name{faker}
 	faker.Address = &Address{faker}
+	faker.Phone = &Phone{faker}
 	return faker, nil
 }
 
