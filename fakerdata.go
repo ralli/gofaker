@@ -19,14 +19,16 @@ type localeData struct {
 	data   interface{}
 }
 
-// AllData holds Data onjects for multiple locales.
+// data holds Data onjects for multiple locales.
 // The Get operation will try all these locale
 // data objects until a match is found.
-type AllData struct {
+type allData struct {
 	locales []*localeData
 }
 
 var allLocales []string
+
+var allDatas = make(map[string]*allData)
 
 // keys returns an array of sub keys from a given key.
 // ex. keys("address.prefix") returns ["address", "prefix"]
@@ -123,6 +125,10 @@ func loadLocaleData(locale string) (interface{}, error) {
 
 // NewData creates a new fake data definition object for a given locale.
 func NewData(locale string) (Data, error) {
+	if r, ok := allDatas[locale]; ok {
+		return r, nil
+	}
+
 	if !existsLocale(locale) {
 		return nil, fmt.Errorf("invalid locale %s", locale)
 	}
@@ -137,13 +143,15 @@ func NewData(locale string) (Data, error) {
 		data = append(data, &localeData{l, yamlData})
 	}
 
-	return &AllData{data}, nil
+	r := &allData{data}
+	allDatas[locale] = r
+	return r, nil
 }
 
 // Get returns a fake data definition for a given key.
 // A fake data definition is a list from which a random value may be
 // chosen.
-func (d *AllData) Get(key string) []string {
+func (d *allData) Get(key string) []string {
 	for _, locale := range d.locales {
 		a := locale.Get(key)
 		if a != nil {
