@@ -15,6 +15,9 @@ func TestName(t *testing.T) {
 	t.Run("LastName", func(t *testing.T) {
 		assert.NotEmpty(t, f.Name.LastName())
 	})
+	t.Run("Name", func(t *testing.T) {
+		assert.NotEmpty(t, f.Name.Name())
+	})
 	t.Run("Prefix", func(t *testing.T) {
 		assert.NotEmpty(t, f.Name.Prefix())
 	})
