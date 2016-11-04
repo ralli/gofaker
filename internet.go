@@ -2,6 +2,7 @@ package gofaker
 
 import (
 	"bytes"
+	"fmt"
 	"regexp"
 	"strings"
 	"unicode"
@@ -30,7 +31,7 @@ func (internet *Internet) UserName() string {
 		panic(err)
 	}
 	a := []string{f.Name.FirstName(), f.Name.LastName()}
-	internet.faker.ShuffleStrings(a)
+	internet.faker.shuffleStrings(a)
 	return internet.UserWithName(strings.Join(a, " "))
 }
 
@@ -107,4 +108,20 @@ func (internet *Internet) cleanupDomainName(in string) string {
 		}
 	}
 	return string(out.Bytes())
+}
+
+func (internet *Internet) MacAddress() string {
+	var parts []string
+	for i := 0; i < 6; i++ {
+		parts = append(parts, fmt.Sprintf("%02x", internet.faker.random.Intn(256)))
+	}
+	return strings.Join(parts, ":")
+}
+
+func (internet *Internet) IPv4Address() string {
+	var parts []string
+	for i := 0; i < 4; i++ {
+		parts = append(parts, fmt.Sprintf("%d", internet.faker.random.Intn(253)+2))
+	}
+	return strings.Join(parts, ".")
 }

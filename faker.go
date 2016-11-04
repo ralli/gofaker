@@ -220,13 +220,9 @@ func (faker *Faker) Bothify(s string) string {
 	return string(out)
 }
 
-func (faker *Faker) ShuffleStrings(slice []string) {
+func (faker *Faker) shuffleStrings(slice []string) {
 	for i := range slice {
 		j := faker.random.Intn(i + 1)
 		slice[i], slice[j] = slice[j], slice[i]
 	}
-}
-
-func (faker *Faker) RandomChar(s string) byte {
-	return s[faker.random.Intn(len(s))]
 }

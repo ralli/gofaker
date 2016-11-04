@@ -57,4 +57,12 @@ func TestInternet(t *testing.T) {
 	t.Run("SafeMailWithName", func(t *testing.T) {
 		assert.Regexp(t, "^\\w+[._-]\\w+@example\\.(org|com|net)$", f.Internet.SafeMail())
 	})
+
+	t.Run("MacAddress", func(t *testing.T) {
+		assert.Regexp(t, `^[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}:[a-f0-9]{2}$`, f.Internet.MacAddress())
+	})
+
+	t.Run("IPv4Address", func(t *testing.T) {
+		assert.Regexp(t, `^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$`, f.Internet.IPv4Address())
+	})
 }
