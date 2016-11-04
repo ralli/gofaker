@@ -27,4 +27,5 @@ func TestName(t *testing.T) {
 	t.Run("Title", func(t *testing.T) {
 		assert.NotEmpty(t, f.Name.Title())
 	})
+	
 }

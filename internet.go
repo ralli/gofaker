@@ -2,7 +2,6 @@ package gofaker
 
 import (
 	"bytes"
-	"math/rand"
 	"regexp"
 	"strings"
 	"unicode"
@@ -10,6 +9,7 @@ import (
 
 var userSeparators = []string{"_", "."}
 var reUserSplit = regexp.MustCompile(`\W+`)
+var safeEmailSuffixes = []string{"org", "com", "net"}
 
 type Internet struct {
 	faker *Faker
@@ -36,30 +36,47 @@ func (internet *Internet) UserName() string {
 
 var passwordChars = []rune("0123456789abcdefghjiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!$%&/()=?-_.:,;#'+*<>")
 
+// PasswordWithLength returns a password with a length ranging from minLength to maxLength
 func (internet *Internet) PasswordWithLength(minLength int, maxLength int) string {
 	length := internet.faker.random.Intn(maxLength-minLength) + minLength
 	result := make([]rune, 0, length)
 	for i := 0; i < length; i++ {
-		idx := rand.Intn(len(passwordChars))
+		idx := internet.faker.random.Intn(len(passwordChars))
 		result = append(result, passwordChars[idx])
 	}
 	return string(result)
 }
 
+// Password returns a password
 func (internet *Internet) Password() string {
 	return internet.PasswordWithLength(6, 10)
 }
 
+// EmailWithUserName returns an email-Address for a given name
 func (internet *Internet) EmailWithUsername(name string) string {
-	return internet.UserWithName(name) + "@" + internet.DomainWord() + internet.faker.MustParse("internet.domain_suffix")
+	return internet.UserWithName(name) + "@" + internet.DomainWord() + "." + internet.faker.MustParse("internet.domain_suffix")
 }
 
+// Email returns an email address
 func (internet *Internet) Email() string {
-	return internet.EmailWithUsername(internet.faker.Name.FirstName() + " " + internet.faker.Name.LastName())
+	return internet.UserName() + "@" + internet.DomainWord() + "." + internet.faker.MustParse("internet.domain_suffix")
 }
 
 func (internet *Internet) FreeMailWithName(name string) string {
 	return internet.UserWithName(name) + "@" + internet.faker.MustParse("internet.free_email")
+}
+
+func (internet *Internet) FreeMail() string {
+	return internet.UserName() + "@" + internet.faker.MustParse("internet.free_email")
+}
+
+func (internet *Internet) SafeMailWithName(name string) string {
+
+	return internet.UserWithName(name) + "@example." + internet.faker.randomValue(safeEmailSuffixes)
+}
+
+func (internet *Internet) SafeMail() string {
+	return internet.UserName() + "@example." + internet.faker.randomValue(safeEmailSuffixes)
 }
 
 func (internet *Internet) DomainWord() string {
