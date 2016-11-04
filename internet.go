@@ -11,6 +11,13 @@ import (
 var userSeparators = []string{"_", "."}
 var reUserSplit = regexp.MustCompile(`\W+`)
 var safeEmailSuffixes = []string{"org", "com", "net"}
+var privateNetRegEx = []*regexp.Regexp{
+	regexp.MustCompile(`^10\.`),
+	regexp.MustCompile(`^127\.`),
+	regexp.MustCompile(`^169\.254\.`),
+	regexp.MustCompile(`^172\.(16|17|18|19|2\d|30|31)\.`),
+	regexp.MustCompile(`^192\.168\.`),
+}
 
 type Internet struct {
 	faker *Faker
@@ -72,7 +79,6 @@ func (internet *Internet) FreeMail() string {
 }
 
 func (internet *Internet) SafeMailWithName(name string) string {
-
 	return internet.UserWithName(name) + "@example." + internet.faker.randomValue(safeEmailSuffixes)
 }
 
@@ -124,4 +130,32 @@ func (internet *Internet) IPv4Address() string {
 		parts = append(parts, fmt.Sprintf("%d", internet.faker.random.Intn(253)+2))
 	}
 	return strings.Join(parts, ".")
+}
+
+func (internet *Internet) PrivateIPv4Address() string {
+	for {
+		s := internet.IPv4Address()
+		if isPrivateNet(s) {
+			return s
+		}
+	}
+}
+
+func isPrivateNet(s string) bool {
+	for _, r := range privateNetRegEx {
+		if r.MatchString(s) {
+			return true
+		}
+	}
+	return false
+}
+
+func (internet *Internet) IPv6Address() string {
+	var parts []string
+
+	for i := 0; i < 8; i++ {
+		parts = append(parts, fmt.Sprintf("%x", internet.faker.random.Intn(65536)))
+	}
+
+	return strings.Join(parts, ":")
 }

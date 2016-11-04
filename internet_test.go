@@ -65,4 +65,32 @@ func TestInternet(t *testing.T) {
 	t.Run("IPv4Address", func(t *testing.T) {
 		assert.Regexp(t, `^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$`, f.Internet.IPv4Address())
 	})
+
+	t.Run("PrivateIPv4Address", func(t *testing.T) {
+		assert.Regexp(t, `^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$`, f.Internet.PrivateIPv4Address())
+	})
+
+	t.Run("isPrivateNet", func(t *testing.T) {
+		in := []struct {
+			input    string
+			expected bool
+		}{
+			{"192.168.1.7", true},
+			{"10.0.0.1", true},
+			{"169.254.1.7", true},
+			{"172.28.1.7", true},
+			{"172.172.1.3", false},
+			{"18.31.1.3", false},
+		}
+
+		t.Run("IPv6Address", func(t *testing.T) {
+			assert.Regexp(t, `^[0-9a-f]{1,4}:[0-9a-f]{1,4}:[0-9a-f]{1,4}:[0-9a-f]{1,4}:[0-9a-f]{1,4}:[0-9a-f]{1,4}:[0-9a-f]{1,4}:[0-9a-f]{1,4}$`, f.Internet.IPv6Address())
+		})
+
+		for _, v := range in {
+			if isPrivateNet(v.input) != v.expected {
+				t.Errorf("expected isPrivateNet(%s) to be %v but was %v", v.input, v.expected, !v.expected)
+			}
+		}
+	})
 }
