@@ -15,6 +15,10 @@ func (name *Name) LastName() string {
 	return name.faker.MustParse("name.last_name")
 }
 
+func (name *Name) Name() string {
+	return name.faker.MustParse("name.name")
+}
+
 // Prefix generates a name prefix
 func (name *Name) Prefix() string {
 	return name.faker.MustParse("name.prefix")

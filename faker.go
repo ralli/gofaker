@@ -20,7 +20,7 @@ type Faker struct {
 	Company  *Company
 }
 
-var digits = []rune{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
+var digits = []rune("0123456789")
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 func (faker *Faker) randomValue(a []string) string {
@@ -42,7 +42,7 @@ func extractSubKeys(expression string) []string {
 	return result
 }
 
-// ToSnake convert the given string to snake case following the Golang format:
+// ToSnake converts the given string to snake case following the Golang format:
 // acronyms are converted to lower-case and preceded by an underscore.
 func ToSnake(in string) string {
 	runes := []rune(in)
@@ -179,14 +179,18 @@ func NewFaker(locale string) (*Faker, error) {
 	return faker, nil
 }
 
+// Reset resets the fakers random number generator so that a repeatable sequence of values is returned.
+// Useful for testing.
 func (faker *Faker) Reset() {
 	faker.random.Seed(42)
 }
 
+// RandomDigit returns a random digit.
 func (faker *Faker) RandomDigit() rune {
 	return digits[faker.random.Intn(10)]
 }
 
+// Numerify replaces all hash signs within a string with random digits.
 func (faker *Faker) Numerify(s string) string {
 	var out []rune
 	for _, c := range s {
@@ -199,10 +203,12 @@ func (faker *Faker) Numerify(s string) string {
 	return string(out)
 }
 
+// RandomLetter returns a random letter (a-z, A-Z)
 func (faker *Faker) RandomLetter() rune {
 	return letters[faker.random.Intn(len(letters))]
 }
 
+// Letterify replaces all question marks within a string with random letters.
 func (faker *Faker) Letterify(s string) string {
 	var out []rune
 	for _, c := range s {
@@ -215,6 +221,7 @@ func (faker *Faker) Letterify(s string) string {
 	return string(out)
 }
 
+// Bothify replaces all hash signs within a string with random digits and all
 func (faker *Faker) Bothify(s string) string {
 	var out []rune
 	for _, c := range s {
@@ -227,4 +234,11 @@ func (faker *Faker) Bothify(s string) string {
 		}
 	}
 	return string(out)
+}
+
+func (faker *Faker) shuffleStrings(slice []string) {
+	for i := range slice {
+		j := faker.random.Intn(i + 1)
+		slice[i], slice[j] = slice[j], slice[i]
+	}
 }
