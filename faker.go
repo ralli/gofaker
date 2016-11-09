@@ -18,6 +18,8 @@ type Faker struct {
 	Phone    *Phone
 	Internet *Internet
 	Company  *Company
+	Code     *Code
+	Commerce *Commerce
 }
 
 var digits = []rune("0123456789")
@@ -169,6 +171,7 @@ func NewFaker(locale string) (*Faker, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	random := rand.New(rand.NewSource(time.Now().UnixNano()))
 	faker := &Faker{random: random, data: data}
 	faker.Name = &Name{faker}
@@ -176,6 +179,9 @@ func NewFaker(locale string) (*Faker, error) {
 	faker.Phone = &Phone{faker}
 	faker.Internet = &Internet{faker}
 	faker.Company = &Company{faker}
+	faker.Code = &Code{faker}
+	faker.Commerce = &Commerce{faker}
+
 	return faker, nil
 }
 
