@@ -57,6 +57,20 @@ func TestFaker(t *testing.T) {
 	t.Run("FetchOrEmptyReturnsEmpty", func(t *testing.T) {
 		assert.Empty(t, f.FetchOrEmpty("dummy"))
 	})
+
+	t.Run("FetchList", func(t *testing.T) {
+		_, err := f.FetchList("company.bs")
+		assert.NoError(t, err)
+	})
+
+	t.Run("FetchListError", func(t *testing.T) {
+		_, err := f.FetchList("dummy")
+		assert.Error(t, err)
+	})
+
+	t.Run("MustFetchListPanics", func(t *testing.T) {
+		assert.Panics(t, func() { f.MustFetchList("dummy") })
+	})
 }
 
 func TestExtractSubKeys(t *testing.T) {

@@ -147,6 +147,22 @@ func (faker *Faker) FetchOrEmpty(key string) string {
 	return v
 }
 
+func (faker *Faker) FetchList(key string) ([][]string, error) {
+	v := faker.data.GetList(key)
+	if v == nil {
+		return nil, fmt.Errorf("%s not found", key)
+	}
+	return v, nil
+}
+
+func (faker *Faker) MustFetchList(key string) [][]string {
+	v, err := faker.FetchList(key)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // NewFaker creates a new Faker instance for a given locale
 func NewFaker(locale string) (*Faker, error) {
 	data, err := NewData(locale)

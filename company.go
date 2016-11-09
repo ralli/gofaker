@@ -22,6 +22,15 @@ func (company *Company) Industry() string {
 	return company.faker.MustParse("company.industry")
 }
 
+func (company *Company) Bullshit() string {
+	lists := company.faker.MustFetchList("company.bs")
+	var parts []string
+	for _, p := range lists {
+		parts = append(parts, company.faker.randomValue(p))
+	}
+	return strings.Join(parts, " ")
+}
+
 func (company *Company) EIN() string {
 	return company.faker.Numerify("##-#######")
 }

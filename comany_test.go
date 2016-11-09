@@ -23,6 +23,13 @@ func ExampleCompanyIndustry() {
 	// Output: Research
 }
 
+func ExampleCompanyBullshit() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Company.Bullshit())
+	// Output: evolve global solutions
+}
+
 func ExampleCompanyEIN() {
 	f, _ := NewFaker("en")
 	f.Reset()

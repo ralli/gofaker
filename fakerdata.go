@@ -12,6 +12,7 @@ import (
 // Data provides access to fake data definitions used to make up fake data.
 type Data interface {
 	Get(key string) []string
+	GetList(key string) [][]string
 }
 
 type localeData struct {
@@ -81,10 +82,7 @@ func getFallbackLocales(locale string) []string {
 	return result
 }
 
-// Get returns a fake data definition for a given key.
-// A fake data definition is a list from which a random value may be
-// chosen.
-func (d *localeData) Get(key string) []string {
+func (d *localeData) traverse(key string) interface{} {
 	keys := keys(key)
 	var current interface{} = d.data
 	for _, k := range keys {
@@ -94,16 +92,50 @@ func (d *localeData) Get(key string) []string {
 			return nil
 		}
 	}
+	return current
+}
+
+func createStringArray(a []interface{}) []string {
+	b := make([]string, len(a))
+	for i := range a {
+		b[i] = fmt.Sprint(a[i])
+	}
+	return b
+}
+
+// Get returns a fake data definition for a given key.
+// A fake data definition is a list from which a random value may be
+// chosen.
+func (d *localeData) Get(key string) []string {
+	current := d.traverse(key)
 	if _, ok := current.(map[interface{}]interface{}); ok {
 		return nil
 	} else if a, ok := current.([]interface{}); ok {
-		b := make([]string, len(a))
-		for i := range a {
-			b[i] = fmt.Sprint(a[i])
-		}
-		return b
+		return createStringArray(a)
 	} else if current != nil {
 		return []string{fmt.Sprint(current)}
+	}
+	return nil
+}
+
+func (d *localeData) GetList(key string) [][]string {
+	current := d.traverse(key)
+	if a, ok := current.([]interface{}); ok {
+		if len(a) > 0 {
+			b := a[0]
+			if _, ook := b.([]interface{}); ook {
+				c := make([][]string, len(a))
+				for i := range a {
+					b := a[i]
+					if d, ok := b.([]interface{}); ok {
+						c[i] = createStringArray(d)
+					} else {
+						return nil
+					}
+				}
+				return c
+			}
+		}
 	}
 	return nil
 }
@@ -154,6 +186,16 @@ func NewData(locale string) (Data, error) {
 func (d *allData) Get(key string) []string {
 	for _, locale := range d.locales {
 		a := locale.Get(key)
+		if a != nil {
+			return a
+		}
+	}
+	return nil
+}
+
+func (d *allData) GetList(key string) [][]string {
+	for _, locale := range d.locales {
+		a := locale.GetList(key)
 		if a != nil {
 			return a
 		}
