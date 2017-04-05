@@ -20,6 +20,7 @@ type Faker struct {
 	Company  *Company
 	Code     *Code
 	Commerce *Commerce
+	Lorem    *Lorem
 }
 
 var digits = []rune("0123456789")
@@ -52,7 +53,7 @@ func ToSnake(in string) string {
 
 	var out []rune
 	for i := 0; i < length; i++ {
-		if i > 0 && unicode.IsUpper(runes[i]) && ((i+1 < length && unicode.IsLower(runes[i+1])) || unicode.IsLower(runes[i-1])) {
+		if i > 0 && unicode.IsUpper(runes[i]) && ((i + 1 < length && unicode.IsLower(runes[i + 1])) || unicode.IsLower(runes[i - 1])) {
 			out = append(out, '_')
 		}
 		out = append(out, unicode.ToLower(runes[i]))
@@ -66,7 +67,7 @@ func getBaseKeyPrefix(k string) string {
 	if len(a) == 0 {
 		return ""
 	}
-	return strings.Join(a[:len(a)-1], ".")
+	return strings.Join(a[:len(a) - 1], ".")
 }
 
 func (faker *Faker) subkeyValue(baseKey string, k string) (string, error) {
@@ -105,7 +106,7 @@ func (faker *Faker) Parse(key string) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		v = strings.Replace(v, "#{"+k+"}", sv, 1)
+		v = strings.Replace(v, "#{" + k + "}", sv, 1)
 	}
 	return v, nil
 }
@@ -181,7 +182,7 @@ func NewFaker(locale string) (*Faker, error) {
 	faker.Company = &Company{faker}
 	faker.Code = &Code{faker}
 	faker.Commerce = &Commerce{faker}
-
+	faker.Lorem = &Lorem{faker}
 	return faker, nil
 }
 
@@ -247,4 +248,14 @@ func (faker *Faker) shuffleStrings(slice []string) {
 		j := faker.random.Intn(i + 1)
 		slice[i], slice[j] = slice[j], slice[i]
 	}
+}
+
+func (faker *Faker) Sample(arr []string, num int) []string {
+	var result []string
+
+	for i := 0; i < num; i++ {
+		idx := faker.random.Intn(len(arr))
+		result = append(result, arr[idx ])
+	}
+	return result
 }
