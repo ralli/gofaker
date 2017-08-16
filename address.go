@@ -15,7 +15,7 @@ func (a *Address) StreetName() string {
 	return a.faker.MustParse("address.street_name")
 }
 
-func (a *Address) SteetAddress() string {
+func (a *Address) StreetAddress() string {
 	return a.faker.Numerify(a.faker.MustParse("address.street_address"))
 }
 
