@@ -13,7 +13,7 @@ func TestAddress(t *testing.T) {
 	assert.NoError(t, err)
 	t.Run("City", func(t *testing.T) { assert.NotEmpty(t, f.Address.City()) })
 	t.Run("StreetName", func(t *testing.T) { assert.NotEmpty(t, f.Address.StreetName()) })
-	t.Run("SteetAddress", func(t *testing.T) { assert.NotEmpty(t, f.Address.SteetAddress()) })
+	t.Run("StreetAddress", func(t *testing.T) { assert.NotEmpty(t, f.Address.StreetAddress()) })
 	t.Run("BuildingNumber", func(t *testing.T) { assert.NotEmpty(t, f.Address.BuildingNumber()) })
 	t.Run("ZipCode", func(t *testing.T) { assert.NotEmpty(t, f.Address.ZipCode()) })
 	t.Run("ZipCodeByState", func(t *testing.T) {
