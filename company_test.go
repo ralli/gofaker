@@ -9,13 +9,6 @@ func ExampleCompany_Name() {
 	// Output: Willms, Crona and Swift
 }
 
-func ExampleCompany_Suffix() {
-	f, _ := NewFaker("en")
-	f.Reset()
-	fmt.Println(f.Company.Suffix())
-	// Output: and Sons
-}
-
 func ExampleCompany_Bullshit() {
 	f, _ := NewFaker("en")
 	f.Reset()
@@ -42,13 +35,6 @@ func ExampleCompany_DUNSNumber() {
 	f.Reset()
 	fmt.Println(f.Company.DUNSNumber())
 	// Output: 57-803-5768
-}
-
-func Example_luhn() {
-	in := "446667651"
-	out := luhn(in)
-	fmt.Println(out)
-	// Output: 40
 }
 
 func ExampleCompany_SwedishOrganisationNumber() {

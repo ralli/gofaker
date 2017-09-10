@@ -12,7 +12,7 @@ import (
 // Faker does something
 type Faker struct {
 	random   *rand.Rand
-	data     Data
+	data     fakerData
 	Name     *Name
 	Address  *Address
 	Phone    *Phone
@@ -53,7 +53,7 @@ func ToSnake(in string) string {
 
 	var out []rune
 	for i := 0; i < length; i++ {
-		if i > 0 && unicode.IsUpper(runes[i]) && ((i + 1 < length && unicode.IsLower(runes[i + 1])) || unicode.IsLower(runes[i - 1])) {
+		if i > 0 && unicode.IsUpper(runes[i]) && ((i+1 < length && unicode.IsLower(runes[i+1])) || unicode.IsLower(runes[i-1])) {
 			out = append(out, '_')
 		}
 		out = append(out, unicode.ToLower(runes[i]))
@@ -67,7 +67,7 @@ func getBaseKeyPrefix(k string) string {
 	if len(a) == 0 {
 		return ""
 	}
-	return strings.Join(a[:len(a) - 1], ".")
+	return strings.Join(a[:len(a)-1], ".")
 }
 
 func (faker *Faker) subkeyValue(baseKey string, k string) (string, error) {
@@ -106,7 +106,7 @@ func (faker *Faker) Parse(key string) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		v = strings.Replace(v, "#{" + k + "}", sv, 1)
+		v = strings.Replace(v, "#{"+k+"}", sv, 1)
 	}
 	return v, nil
 }
@@ -250,12 +250,20 @@ func (faker *Faker) shuffleStrings(slice []string) {
 	}
 }
 
+// Sample returns a sample (some random items) of a given array. The sample entries are not guaranteed to be unique.
+//
+// faker.Sample([]string{"a", "b", "c", "d", "e", "f"}, 6) might return []string{"e", "a", "e", "b", "f", "c"}
 func (faker *Faker) Sample(arr []string, num int) []string {
 	var result []string
 
 	for i := 0; i < num; i++ {
 		idx := faker.random.Intn(len(arr))
-		result = append(result, arr[idx ])
+		result = append(result, arr[idx])
 	}
 	return result
+}
+
+// AllLocales returns a list of all available locales supported by gofaker.
+func AllLocales() []string {
+	return allLocales
 }

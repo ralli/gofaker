@@ -2,10 +2,13 @@ package gofaker
 
 import "fmt"
 
+// Code provides functions to generate codes (ISBN numbers and the like).
 type Code struct {
 	faker *Faker
 }
 
+// Base10ISBN generates an old (10 digit) ISBN number (international standard book number).
+// Users normally would like to generate a Base13ISBN. Since 2007 all ISBNs have to be base 13.
 func (code *Code) Base10ISBN() string {
 	num := code.faker.Numerify("#########")
 	sum := 0
@@ -25,6 +28,7 @@ func (code *Code) Base10ISBN() string {
 	return num + remainder
 }
 
+// Base10ISBN generates an ISBN number (international standard book number).
 func (code *Code) Base13ISBN() string {
 	num := code.faker.Numerify("############")
 	sum := 0
@@ -43,21 +47,3 @@ func (code *Code) Base13ISBN() string {
 	remainder := fmt.Sprint(check)
 	return num + remainder
 }
-
-//
-//  public static String base13ISBN() {
-//    String num = Base.numerify("############");
-//    int sum = 0;
-//    for (int i = 0; i < 12; ++i) {
-//      int val = num.charAt(i) - '0';
-//      int idx = i + 1;
-//      if (idx % 2 == 0)
-//        sum += val;
-//      else
-//        sum += val * 3;
-//    }
-//    sum %= 10;
-//    int check = (10 - sum) % 10;
-//    String remainder = Integer.toString(check);
-//    return num + remainder;
-//  }

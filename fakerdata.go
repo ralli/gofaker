@@ -10,8 +10,14 @@ import (
 )
 
 // Data provides access to fake data definitions used to make up fake data.
-type Data interface {
+type fakerData interface {
+	// Get returns a list of possible values for a given key. For example Get("name.first_name") will
+	// return a list of valid first names.
 	Get(key string) []string
+
+	// GetList returns a list of lists of valid values for a given key. This is used for "bullshit" like sentences
+	// which are built of a valid first, second and third word (subject, verb and object).
+	// An example for a "bullshit" sentence is "implement value-added web-readyness".
 	GetList(key string) [][]string
 }
 
@@ -20,9 +26,8 @@ type localeData struct {
 	data   interface{}
 }
 
-// data holds Data onjects for multiple locales.
-// The Get operation will try all these locale
-// data objects until a match is found.
+// data holds Data objects for multiple locales.
+// The Get operation will try all these locale data objects until a match is found.
 type allData struct {
 	locales []*localeData
 }
@@ -82,6 +87,8 @@ func getFallbackLocales(locale string) []string {
 	return result
 }
 
+// traverse returns the leaf value in the data tree for a given composite key.
+// For example: data.traverse("address.street") returns something like data["address"]["street"].
 func (d *localeData) traverse(key string) interface{} {
 	keys := keys(key)
 	var current interface{} = d.data
@@ -118,6 +125,9 @@ func (d *localeData) Get(key string) []string {
 	return nil
 }
 
+// GetList returns a list of lists of valid values for a given key. This is used for "bullshit" like sentences
+// which are built of a valid first, second and third word (subject, verb and object).
+// An example for a "bullshit" sentence is "implement value-added web-readyness".
 func (d *localeData) GetList(key string) [][]string {
 	current := d.traverse(key)
 	if a, ok := current.([]interface{}); ok {
@@ -156,7 +166,7 @@ func loadLocaleData(locale string) (interface{}, error) {
 }
 
 // NewData creates a new fake data definition object for a given locale.
-func NewData(locale string) (Data, error) {
+func NewData(locale string) (fakerData, error) {
 	if r, ok := allDatas[locale]; ok {
 		return r, nil
 	}
@@ -193,6 +203,9 @@ func (d *allData) Get(key string) []string {
 	return nil
 }
 
+// GetList returns a list of lists of valid values for a given key. This is used for "bullshit" like sentences
+// which are built of a valid first, second and third word (subject, verb and object).
+// An example for a "bullshit" sentence is "implement value-added web-readyness".
 func (d *allData) GetList(key string) [][]string {
 	for _, locale := range d.locales {
 		a := locale.GetList(key)

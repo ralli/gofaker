@@ -5,6 +5,8 @@ import (
 	"strconv"
 	"testing"
 
+	"fmt"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -21,10 +23,6 @@ func TestAddress(t *testing.T) {
 		assert.Regexp(t, regexp.MustCompile(".*AZ$"), out)
 	})
 	t.Run("TimeZone", func(t *testing.T) { assert.NotEmpty(t, f.Address.TimeZone()) })
-
-	t.Run("StreetSuffix", func(t *testing.T) { assert.NotEmpty(t, f.Address.StreetSuffix()) })
-	t.Run("CitySuffix", func(t *testing.T) { assert.NotEmpty(t, f.Address.CitySuffix()) })
-	t.Run("CityPrefix", func(t *testing.T) { assert.NotEmpty(t, f.Address.CityPrefix()) })
 	t.Run("StateAbbr", func(t *testing.T) { assert.NotEmpty(t, f.Address.StateAbbr()) })
 	t.Run("State", func(t *testing.T) { assert.NotEmpty(t, f.Address.State()) })
 	t.Run("Country", func(t *testing.T) { assert.NotEmpty(t, f.Address.Country()) })
@@ -52,4 +50,96 @@ func TestAddress(t *testing.T) {
 			t.Errorf("expected %f to be greater or equal than -180.0", lon)
 		}
 	})
+}
+
+func ExampleAddress_City() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.City())
+	// Output: West Camilla
+}
+
+func ExampleAddress_StreetName() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.StreetName())
+	// Output: Willms Grove
+}
+
+func ExampleAddress_StreetAddress() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.StreetAddress())
+	// Output: 576 Maybelle Prairie
+}
+
+func ExampleAddress_BuildingNumber() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.BuildingNumber())
+	// The building number may actually have a number of different formats
+	// Output: 780
+}
+
+func ExampleAddress_ZipCode() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.ZipCode())
+	// Output: 78035-7683
+}
+
+func ExampleAddress_ZipCodeByState() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.ZipCodeByState("AZ"))
+	// Output: 78035-7683AZ
+}
+
+func ExampleAddress_TimeZone() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.TimeZone())
+	// Output: Europe/Dublin
+}
+
+func ExampleAddress_StateAbbr() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.StateAbbr())
+	// Output: CO
+}
+
+func ExampleAddress_State() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.State())
+	// Output: Colorado
+}
+
+func ExampleAddress_Country() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.Country())
+	// Output: Tanzania
+}
+
+func ExampleAddress_CountryCode() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.CountryCode())
+	// Output: CY
+}
+
+func ExampleAddress_Longitude() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.Longitude())
+	// Output: -45.71
+}
+
+func ExampleAddress_Latitude() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.Latitude())
+	// Output: -22.85
 }

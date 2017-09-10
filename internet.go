@@ -19,6 +19,7 @@ var privateNetRegEx = []*regexp.Regexp{
 	regexp.MustCompile(`^192\.168\.`),
 }
 
+// Internet provides functions to generate fake data for email addresses, user names, URLs and the like.
 type Internet struct {
 	faker *Faker
 }
@@ -70,22 +71,30 @@ func (internet *Internet) Email() string {
 	return internet.UserName() + "@" + internet.DomainWord() + "." + internet.faker.MustParse("internet.domain_suffix")
 }
 
+// FreeMailWithName generates an email address for a given user at a known free mail provider like gmail.
+// The given user name will be normalized so that it becomes a valid email user name.
 func (internet *Internet) FreeMailWithName(name string) string {
 	return internet.UserWithName(name) + "@" + internet.faker.MustParse("internet.free_email")
 }
 
+// FreeMail generates an email address for a random user at a known free mail provider like gmail.
+// The given user name will be normalized so that it becomes a valid email user name.
 func (internet *Internet) FreeMail() string {
 	return internet.UserName() + "@" + internet.faker.MustParse("internet.free_email")
 }
 
+// SafeMailWithName generates an email address for which it is safe to send test mail to (like example.com).
+// The given user name will be normalized so that it becomes a valid email user name.
 func (internet *Internet) SafeMailWithName(name string) string {
 	return internet.UserWithName(name) + "@example." + internet.faker.randomValue(safeEmailSuffixes)
 }
 
+// SafeMailWithName generates an email for which it is safe to send test mail to (like example.com).
 func (internet *Internet) SafeMail() string {
 	return internet.UserName() + "@example." + internet.faker.randomValue(safeEmailSuffixes)
 }
 
+// DomainWord returns a valid domain part of an URL.
 func (internet *Internet) DomainWord() string {
 	return strings.ToLower(internet.cleanupDomainName(internet.faker.Company.Name()))
 }
@@ -116,6 +125,7 @@ func (internet *Internet) cleanupDomainName(in string) string {
 	return string(out.Bytes())
 }
 
+// MacAddress generates a MAC address.
 func (internet *Internet) MacAddress() string {
 	var parts []string
 	for i := 0; i < 6; i++ {
@@ -124,6 +134,7 @@ func (internet *Internet) MacAddress() string {
 	return strings.Join(parts, ":")
 }
 
+// IPv4Address generates an IP-Address.
 func (internet *Internet) IPv4Address() string {
 	var parts []string
 	for i := 0; i < 4; i++ {
@@ -132,6 +143,7 @@ func (internet *Internet) IPv4Address() string {
 	return strings.Join(parts, ".")
 }
 
+// PrivateIPv4Address generates an IP Address reserved for the local network like "192.168.x.y".
 func (internet *Internet) PrivateIPv4Address() string {
 	for {
 		s := internet.IPv4Address()
@@ -150,6 +162,7 @@ func isPrivateNet(s string) bool {
 	return false
 }
 
+// IPv6Address returns a valid IP V6 Address.
 func (internet *Internet) IPv6Address() string {
 	var parts []string
 

@@ -21,7 +21,7 @@ var romanizeTable = map[rune]string{
 	'ä': "ae", 'ö': "oe", 'ü': "ue", 'Ä': "Ae", 'Ö': "Oe", 'Ü': "Ue", 'ß': "ss",
 }
 
-// Romanize maps characters from a s to the ascii range. Currently supports
+// Romanize maps characters from a given input string to the ascii range. Currently supports
 // cyrillic characters and german umlauts.
 func Romanize(s string) string {
 	var out bytes.Buffer

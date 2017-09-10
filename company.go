@@ -6,22 +6,23 @@ import (
 	"strings"
 )
 
+// Company provides functions to generate fake data related to companies.
 type Company struct {
 	faker *Faker
 }
 
+// Name generates a companies name.
 func (company *Company) Name() string {
 	return company.faker.MustParse("company.name")
 }
 
-func (company *Company) Suffix() string {
-	return company.faker.MustParse("company.suffix")
-}
-
+// Industry generates the companies industry like "Space and Defense".
 func (company *Company) Industry() string {
 	return company.faker.MustParse("company.industry")
 }
 
+// Bullshit generates a bullshit motto like "implement value-added web-readyness".
+// See http://dack.com/web/bullshit.html for details.
 func (company *Company) Bullshit() string {
 	lists := company.faker.MustFetchList("company.bs")
 	var parts []string
@@ -31,14 +32,17 @@ func (company *Company) Bullshit() string {
 	return strings.Join(parts, " ")
 }
 
+// EIN Generates an Employers ID number (EIN).
 func (company *Company) EIN() string {
 	return company.faker.Numerify("##-#######")
 }
 
+// DUNSNumber generates a DUNS number.
 func (company *Company) DUNSNumber() string {
 	return company.faker.Numerify("##-###-####")
 }
 
+// SwedishOrganisationNumber generates a swedish organisation number.
 func (company *Company) SwedishOrganisationNumber() string {
 	base := company.faker.Numerify("#########")
 	return fmt.Sprintf("%s%d", base, luhn(base))
