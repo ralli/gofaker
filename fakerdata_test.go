@@ -69,7 +69,7 @@ func TestLocaleNames(t *testing.T) {
 }
 
 func TestFakerDataGet(t *testing.T) {
-	d, err := NewData("de")
+	d, err := newData("de")
 	assert.NoError(t, err)
 	a := d.Get("address.city_prefix")
 	assert.NotEmpty(t, a)
@@ -80,6 +80,6 @@ func TestFakerDataGet(t *testing.T) {
 }
 
 func TestNewDataError(t *testing.T) {
-	_, err := NewData("giugu")
+	_, err := newData("giugu")
 	assert.Error(t, err)
 }

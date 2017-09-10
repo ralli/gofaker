@@ -168,7 +168,7 @@ func (faker *Faker) MustFetchList(key string) [][]string {
 
 // NewFaker creates a new Faker instance for a given locale
 func NewFaker(locale string) (*Faker, error) {
-	data, err := NewData(locale)
+	data, err := newData(locale)
 	if err != nil {
 		return nil, err
 	}

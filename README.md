@@ -27,7 +27,6 @@ fake data from multiple goroutines concurrently is still possible when using a s
 
 ## <a name="pkg-index">Index</a>
 * [func AllLocales() []string](#AllLocales)
-* [func NewData(locale string) (fakerData, error)](#NewData)
 * [func Romanize(s string) string](#Romanize)
 * [func ToSnake(in string) string](#ToSnake)
 * [type Address](#Address)
@@ -167,14 +166,6 @@ fake data from multiple goroutines concurrently is still possible when using a s
 func AllLocales() []string
 ```
 AllLocales returns a list of all available locales supported by gofaker.
-
-
-
-## <a name="NewData">func</a> [NewData](/src/target/fakerdata.go?s=4580:4626#L159)
-``` go
-func NewData(locale string) (fakerData, error)
-```
-NewData creates a new fake data definition object for a given locale.
 
 
 

@@ -166,7 +166,7 @@ func loadLocaleData(locale string) (interface{}, error) {
 }
 
 // NewData creates a new fake data definition object for a given locale.
-func NewData(locale string) (fakerData, error) {
+func newData(locale string) (fakerData, error) {
 	if r, ok := allDatas[locale]; ok {
 		return r, nil
 	}
