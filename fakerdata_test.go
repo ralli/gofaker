@@ -73,7 +73,7 @@ func TestFakerDataGet(t *testing.T) {
 	assert.NoError(t, err)
 	a := d.Get("address.city_prefix")
 	assert.NotEmpty(t, a)
-	assert.Equal(t, "[Nord Ost West Süd Neu Alt Bad Groß Klein]", fmt.Sprint(a))
+	assert.Equal(t, "[Nord Ost West Süd Neu Alt Bad Groß Klein Schön]", fmt.Sprint(a))
 	a = d.Get("separator")
 	assert.NotEmpty(t, a)
 	assert.Equal(t, "[ & ]", fmt.Sprint(a))

@@ -34,7 +34,7 @@ func (a *Address) ZipCode() string {
 
 // ZipCodeByState generates a zipcode with an attached state name.
 func (a *Address) ZipCodeByState(stateName string) string {
-	return a.faker.Bothify(a.faker.MustParse("address.postcode_by_state") + stateName)
+	return a.faker.Bothify(a.faker.MustParse("address.postcode_by_state." + stateName))
 }
 
 // TimeZone generates a time zone name like "Europe/Berlin".
@@ -60,6 +60,14 @@ func (a *Address) Country() string {
 // Generates a two letter ISO Country Code like "DE" for "Germany".
 func (a *Address) CountryCode() string {
 	return a.faker.MustParse("address.country_code")
+}
+
+func (a *Address) Community() string {
+	return a.faker.MustParse("address.community")
+}
+
+func (a *Address) FullAddress() string {
+	return a.faker.Bothify(a.faker.MustParse("address.full_address"))
 }
 
 // Latitude generates the latitude of a geographical position.

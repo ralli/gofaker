@@ -121,7 +121,54 @@ func ExampleAllLocales() {
 	for _, s := range AllLocales() {
 		fmt.Println(s)
 	}
-	// Output: ca
+	//bg
+	//ca
+	//ca-CAT
+	//da-DK
+	//de
+	//de-AT
+	//de-CH
+	//en
+	//en-AU
+	//en-BORK
+	//en-CA
+	//en-GB
+	//en-IND
+	//en-MS
+	//en-NEP
+	//en-NG
+	//en-NZ
+	//en-PAK
+	//en-SG
+	//en-UG
+	//en-US
+	//en-ZA
+	//en-au-ocker
+	//es
+	//es-MX
+	//fa
+	//fi-FI
+	//fr
+	//he
+	//id
+	//it
+	//ja
+	//ko
+	//nb-NO
+	//nl
+	//pl
+	//pt
+	//pt-BR
+	//ru
+	//sk
+	//sv
+	//tr
+	//uk
+	//vi
+	//zh-CN
+	//zh-TW
+	//want:
+	//ca
 	//ca-CAT
 	//da-DK
 	//de

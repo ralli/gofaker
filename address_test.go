@@ -1,7 +1,6 @@
 package gofaker
 
 import (
-	"regexp"
 	"strconv"
 	"testing"
 
@@ -18,10 +17,7 @@ func TestAddress(t *testing.T) {
 	t.Run("StreetAddress", func(t *testing.T) { assert.NotEmpty(t, f.Address.StreetAddress()) })
 	t.Run("BuildingNumber", func(t *testing.T) { assert.NotEmpty(t, f.Address.BuildingNumber()) })
 	t.Run("ZipCode", func(t *testing.T) { assert.NotEmpty(t, f.Address.ZipCode()) })
-	t.Run("ZipCodeByState", func(t *testing.T) {
-		out := f.Address.ZipCodeByState("AZ")
-		assert.Regexp(t, regexp.MustCompile(".*AZ$"), out)
-	})
+	t.Run("ZipCodeByState", func(t *testing.T) { assert.NotEmpty(t, f.Address.ZipCodeByState("AZ")) })
 	t.Run("TimeZone", func(t *testing.T) { assert.NotEmpty(t, f.Address.TimeZone()) })
 	t.Run("StateAbbr", func(t *testing.T) { assert.NotEmpty(t, f.Address.StateAbbr()) })
 	t.Run("State", func(t *testing.T) { assert.NotEmpty(t, f.Address.State()) })
@@ -92,7 +88,7 @@ func ExampleAddress_ZipCodeByState() {
 	f, _ := NewFaker("en")
 	f.Reset()
 	fmt.Println(f.Address.ZipCodeByState("AZ"))
-	// Output: 78035-7683AZ
+	// Output: 85078
 }
 
 func ExampleAddress_TimeZone() {
@@ -128,6 +124,20 @@ func ExampleAddress_CountryCode() {
 	f.Reset()
 	fmt.Println(f.Address.CountryCode())
 	// Output: CY
+}
+
+func ExampleAddress_Community() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.Community())
+	// Output: Willow Court
+}
+
+func ExampleAddress_FullAddress() {
+	f, _ := NewFaker("en")
+	f.Reset()
+	fmt.Println(f.Address.FullAddress())
+	// Output: Suite 823 21542 Schaefer Path, New Lukasbury, LA 44541-2979
 }
 
 func ExampleAddress_Longitude() {

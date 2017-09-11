@@ -51,7 +51,9 @@ func loadAllLocales() []string {
 	}
 	var result []string
 	for _, v := range data {
-		result = append(result, strings.TrimSuffix(v, ".yml"))
+		if strings.HasSuffix(v, ".yml") {
+			result = append(result, strings.TrimSuffix(v, ".yml"))
+		}
 	}
 	sort.Strings(result)
 	return result
