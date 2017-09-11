@@ -79,6 +79,18 @@ func TestFakerDataGet(t *testing.T) {
 	assert.Equal(t, "[ & ]", fmt.Sprint(a))
 }
 
+func TestAllData_GetStringMapList(t *testing.T) {
+	d, err := newData("en")
+	assert.NoError(t, err)
+	a := d.GetStringMapList("bank.iban_details")
+	assert.NotEmpty(t, a)
+	m := a[0]
+	_, ok := m["bank_country_code"]
+	assert.True(t, ok)
+	a = d.GetStringMapList("separator")
+	assert.Nil(t, a)
+}
+
 func TestNewDataError(t *testing.T) {
 	_, err := newData("giugu")
 	assert.Error(t, err)

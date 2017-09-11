@@ -89,7 +89,8 @@ en:
         - "#{building_number} #{street_name}"
       full_address:
         - "#{street_address}, #{city}, #{state_abbr} #{postcode}"
-        - "#{secondary_address} #{street_address}, #{city}, #{state_abbr} #{postcode}"
+        - "#{secondary_address} #{street_address}, #{city}, #{state_abbr} #{postcode
+        }"
       default_country: [United States of America]
 
 

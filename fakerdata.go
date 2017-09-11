@@ -19,6 +19,11 @@ type fakerData interface {
 	// which are built of a valid first, second and third word (subject, verb and object).
 	// An example for a "bullshit" sentence is "implement value-added web-readyness".
 	GetList(key string) [][]string
+
+	// GetStringMapList returns a list of string maps. This method is used if structured data is needed to generate data.
+	// An example is "bank.iban_details" where you need a country code, an iban letter code an a maximum length to generate
+	// a valid IBAN.
+	GetStringMapList(key string) []map[string]string
 }
 
 type localeData struct {
@@ -152,6 +157,38 @@ func (d *localeData) GetList(key string) [][]string {
 	return nil
 }
 
+func createStringMap(m map[interface{}]interface{}) map[string]string {
+	result := make(map[string]string)
+
+	for k, v := range m {
+		result[fmt.Sprint(k)] = fmt.Sprint(v)
+	}
+
+	return result
+}
+
+func createMapArray(a []interface{}) []map[string]string {
+	var result []map[string]string
+
+	for _, x := range a {
+		if m, ok := x.(map[interface{}]interface{}); ok {
+			result = append(result, createStringMap(m))
+		}
+	}
+
+	return result
+}
+
+func (d *localeData) GetStringMapList(key string) []map[string]string {
+	current := d.traverse(key)
+	if a, ok := current.([]interface{}); ok {
+		if len(a) > 0 {
+			return createMapArray(a)
+		}
+	}
+	return nil
+}
+
 // loadLocaleData loads the fake data definition for a given locale.
 func loadLocaleData(locale string) (interface{}, error) {
 	bla, err := data.Asset("data/" + locale + ".yml")
@@ -211,6 +248,16 @@ func (d *allData) Get(key string) []string {
 func (d *allData) GetList(key string) [][]string {
 	for _, locale := range d.locales {
 		a := locale.GetList(key)
+		if a != nil {
+			return a
+		}
+	}
+	return nil
+}
+
+func (d *allData) GetStringMapList(key string) []map[string]string {
+	for _, locale := range d.locales {
+		a := locale.GetStringMapList(key)
 		if a != nil {
 			return a
 		}

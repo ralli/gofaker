@@ -15,6 +15,7 @@ type Faker struct {
 	data     fakerData
 	Name     *Name
 	Address  *Address
+	Bank     *Bank
 	Phone    *Phone
 	Internet *Internet
 	Company  *Company
@@ -177,6 +178,7 @@ func NewFaker(locale string) (*Faker, error) {
 	faker := &Faker{random: random, data: data}
 	faker.Name = &Name{faker}
 	faker.Address = &Address{faker}
+	faker.Bank = &Bank{faker}
 	faker.Phone = &Phone{faker}
 	faker.Internet = &Internet{faker}
 	faker.Company = &Company{faker}
