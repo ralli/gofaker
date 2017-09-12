@@ -1,10 +1,18 @@
 package gofaker
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func ExampleCode_ASIN() {
+	faker, _ := NewFaker("en")
+	faker.Reset()
+	fmt.Println(faker.Code.ASIN())
+	// Output: B000654P8C
+}
 
 func TestCodeBase10ISBN(t *testing.T) {
 	faker, err := NewFaker("en")

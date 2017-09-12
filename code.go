@@ -7,6 +7,11 @@ type Code struct {
 	faker *Faker
 }
 
+// ASIN generates a amazon standard identification number.
+func (code *Code) ASIN() string {
+	return code.faker.MustFetch("code.asin")
+}
+
 // Base10ISBN generates an old (10 digit) ISBN number (international standard book number).
 // Users normally would like to generate a Base13ISBN. Since 2007 all ISBNs have to be base 13.
 func (code *Code) Base10ISBN() string {
