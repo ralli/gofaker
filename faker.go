@@ -11,19 +11,20 @@ import (
 
 // Faker does something
 type Faker struct {
-	random   *rand.Rand
-	data     fakerData
-	Name     *Name
-	Address  *Address
-	App      *App
-	Bank     *Bank
-	Book     *Book
-	Phone    *Phone
-	Internet *Internet
-	Company  *Company
-	Code     *Code
-	Commerce *Commerce
-	Lorem    *Lorem
+	random     *rand.Rand
+	data       fakerData
+	Name       *Name
+	Address    *Address
+	App        *App
+	Bank       *Bank
+	Book       *Book
+	CreditCard *CreditCard
+	Phone      *Phone
+	Internet   *Internet
+	Company    *Company
+	Code       *Code
+	Commerce   *Commerce
+	Lorem      *Lorem
 }
 
 var digits = []rune("0123456789")
@@ -183,6 +184,7 @@ func NewFaker(locale string) (*Faker, error) {
 	faker.App = &App{faker}
 	faker.Bank = &Bank{faker}
 	faker.Book = &Book{faker}
+	faker.CreditCard = &CreditCard{faker}
 	faker.Phone = &Phone{faker}
 	faker.Internet = &Internet{faker}
 	faker.Company = &Company{faker}
