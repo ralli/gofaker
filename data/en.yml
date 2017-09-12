@@ -89,8 +89,7 @@ en:
         - "#{building_number} #{street_name}"
       full_address:
         - "#{street_address}, #{city}, #{state_abbr} #{postcode}"
-        - "#{secondary_address} #{street_address}, #{city}, #{state_abbr} #{postcode
-        }"
+        - "#{secondary_address} #{street_address}, #{city}, #{state_abbr} #{postcode}"
       default_country: [United States of America]
 
 
@@ -372,20 +371,20 @@ en:
         abbreviation:  ['NbE', 'NEbN', 'NEbE', 'EbN', 'EbS', 'SEbE', 'SEbS', 'SbE', 'SbW', 'SWbS', 'SWbW', 'WbS', 'WbN', 'NWbW', 'NWbN', 'NbW']
         azimuth:  ['11.25', '33.75', '56.25', '78.75', '101.25', '123.75', '146.25', '168.75', '191.25', '213.75', '236.25', '258.75', '281.25', '303.75', '326.25', '348.75']
       direction:
-        - "#{cardinal}"
-        - "#{ordinal}"
-        - "#{half_wind}"
-        - "#{quarter_wind}"
+        - "#{compass.cardinal.word}"
+        - "#{compass.ordinal.word}"
+        - "#{compass.half_wind.word}"
+        - "#{compass.quarter_wind.word}"
       abbreviation:
-        - "#{cardinal_abbreviation}"
-        - "#{ordinal_abbreviation}"
-        - "#{half_wind_abbreviation}"
-        - "#{quarter_wind_abbreviation}"
+        - "#{compass.cardinal.abbreviation}"
+        - "#{compass.ordinal.abbreviation}"
+        - "#{compass.half_wind.abbreviation}"
+        - "#{compass.quarter_wind.abbreviation}"
       azimuth:
-        - "#{cardinal_azimuth}"
-        - "#{ordinal_azimuth}"
-        - "#{half_wind_azimuth}"
-        - "#{quarter_wind_azimuth}"
+        - "#{compass.cardinal.azimuth}"
+        - "#{compass.ordinal.azimuth}"
+        - "#{compass.half-wind.azimuth}"
+        - "#{compass.quarter-wind.azimuth}"
     demographic:
       race: ["American Indian or Alaska Native", "Asian", "Black or African American", "Native Hawaiian or Other Pacific Islander", "White"]
       sex: ["Male", "Female"]
