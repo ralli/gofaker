@@ -28,6 +28,7 @@ type Faker struct {
 	Code       *Code
 	Commerce   *Commerce
 	Lorem      *Lorem
+	Food       *Food
 }
 
 var digits = []rune("0123456789")
@@ -196,6 +197,7 @@ func NewFaker(locale string) (*Faker, error) {
 	faker.Color = &Color{faker}
 	faker.Compass = &Compass{faker}
 	faker.Commerce = &Commerce{faker}
+	faker.Food = &Food{faker}
 	faker.Lorem = &Lorem{faker}
 	return faker, nil
 }
