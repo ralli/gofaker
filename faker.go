@@ -13,22 +13,23 @@ import (
 type Faker struct {
 	random     *rand.Rand
 	data       fakerData
-	Name       *Name
 	Address    *Address
 	App        *App
 	Bank       *Bank
 	Book       *Book
-	CreditCard *CreditCard
-	Phone      *Phone
-	Internet   *Internet
 	Cat        *Cat
+	Code       *Code
 	Color      *Color
+	Commerce   *Commerce
 	Company    *Company
 	Compass    *Compass
-	Code       *Code
-	Commerce   *Commerce
-	Lorem      *Lorem
+	CreditCard *CreditCard
+	Dessert    *Dessert
 	Food       *Food
+	Internet   *Internet
+	Lorem      *Lorem
+	Name       *Name
+	Phone      *Phone
 }
 
 var digits = []rune("0123456789")
@@ -183,22 +184,23 @@ func NewFaker(locale string) (*Faker, error) {
 
 	random := rand.New(rand.NewSource(time.Now().UnixNano()))
 	faker := &Faker{random: random, data: data}
-	faker.Name = &Name{faker}
 	faker.Address = &Address{faker}
 	faker.App = &App{faker}
 	faker.Bank = &Bank{faker}
 	faker.Book = &Book{faker}
-	faker.CreditCard = &CreditCard{faker}
-	faker.Phone = &Phone{faker}
-	faker.Internet = &Internet{faker}
 	faker.Cat = &Cat{faker}
-	faker.Company = &Company{faker}
 	faker.Code = &Code{faker}
 	faker.Color = &Color{faker}
-	faker.Compass = &Compass{faker}
 	faker.Commerce = &Commerce{faker}
+	faker.Company = &Company{faker}
+	faker.Compass = &Compass{faker}
+	faker.CreditCard = &CreditCard{faker}
+	faker.Dessert = &Dessert{faker}
 	faker.Food = &Food{faker}
+	faker.Internet = &Internet{faker}
 	faker.Lorem = &Lorem{faker}
+	faker.Name = &Name{faker}
+	faker.Phone = &Phone{faker}
 	return faker, nil
 }
 
