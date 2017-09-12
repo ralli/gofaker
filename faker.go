@@ -21,6 +21,7 @@ type Faker struct {
 	CreditCard *CreditCard
 	Phone      *Phone
 	Internet   *Internet
+	Cat        *Cat
 	Color      *Color
 	Company    *Company
 	Compass    *Compass
@@ -189,6 +190,7 @@ func NewFaker(locale string) (*Faker, error) {
 	faker.CreditCard = &CreditCard{faker}
 	faker.Phone = &Phone{faker}
 	faker.Internet = &Internet{faker}
+	faker.Cat = &Cat{faker}
 	faker.Company = &Company{faker}
 	faker.Code = &Code{faker}
 	faker.Color = &Color{faker}
