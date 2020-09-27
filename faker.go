@@ -285,3 +285,18 @@ func (faker *Faker) Sample(arr []string, num int) []string {
 func AllLocales() []string {
 	return allLocales
 }
+
+// RandomInt returns a random integer.
+func (faker *Faker) RandomInt() int {
+	return faker.random.Int()
+}
+
+// RandomIntn returns a random number in the range from 0 to n (exclusive).
+func (faker *Faker) RandomIntn(n int) int {
+	return faker.random.Intn(n)
+}
+
+// RandomFloat returns a random number in the range from 0 to 1.0 (exclusive).
+func (faker *Faker) RandomFloat() float64 {
+	return faker.random.Float64()
+}

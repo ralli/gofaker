@@ -57,7 +57,7 @@ func (a *Address) Country() string {
 	return a.faker.MustParse("address.country")
 }
 
-// Generates a two letter ISO Country Code like "DE" for "Germany".
+// CountryCode generates a two letter ISO Country Code like "DE" for "Germany".
 func (a *Address) CountryCode() string {
 	return a.faker.MustParse("address.country_code")
 }
